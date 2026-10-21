@@ -1,0 +1,19 @@
+# NexoraConnect - connects this server to the Nexora Discord bot.
+# The bot connects to this plugin, so no Discord bot token is ever stored on this server.
+
+# The port the bot connects to. Add the same port under Network in your host's panel (an extra allocation).
+port: 25590
+
+# 0.0.0.0 = reachable from outside. Leave it unless you know why you change it.
+bind: "0.0.0.0"
+
+# The link key. On the Nexora dashboard (Minecraft page) choose "Nexora plugin" and press Generate key, then paste the same key here.
+# It is never sent over the network: every request is signed with it. Treat it like a password.
+key: ""
+
+# Optional, needs PlaceholderAPI: shown before the player's name in Discord, for example "%luckperms_prefix%". Leave empty for none.
+rank-placeholder: ""
+tag-placeholder: ""
+
+# How many seconds the clocks of this server and the bot may differ. Both should use automatic time.
+clock-skew-seconds: 60

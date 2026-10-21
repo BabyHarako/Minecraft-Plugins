@@ -1,0 +1,16 @@
+name: NexoraConnect
+version: ${version}
+main: com.nexora.connect.NexoraConnect
+api-version: '1.16'
+author: Nexora
+description: Connects this server to the Nexora Discord bot (chat, joins, deaths, account linking) without a bot token on the server.
+softdepend: [PlaceholderAPI]
+commands:
+  nexoraconnect:
+    description: Shows whether the Nexora bot is connected.
+    permission: nexoraconnect.admin
+    aliases: [nexora]
+permissions:
+  nexoraconnect.admin:
+    description: See the connection status.
+    default: op
