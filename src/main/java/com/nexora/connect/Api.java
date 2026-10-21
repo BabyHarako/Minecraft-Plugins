@@ -121,6 +121,7 @@ final class Api {
     }
 
     private JsonObject hello() {
+        long position = events.last();             // taken first, so nothing that happens while the player list is read is missed
         Game.Status s = game.status();
         JsonObject o = new JsonObject();
         o.addProperty("plugin", "NexoraConnect");
@@ -129,6 +130,7 @@ final class Api {
         o.addProperty("server", s.server());
         o.addProperty("minecraft", s.minecraft());
         o.addProperty("epoch", String.valueOf(events.epoch));
+        o.addProperty("last", position);
         o.addProperty("now", System.currentTimeMillis());
         o.addProperty("max", s.max());
         JsonArray online = new JsonArray();

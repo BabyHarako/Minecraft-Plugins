@@ -45,7 +45,7 @@ Headers on every request: `X-Nexora-Time`, `X-Nexora-Nonce` (8-64 letters/digits
 
 | Route | |
 |---|---|
-| `GET /v1/hello` | plugin version, server, who is online, `epoch` |
+| `GET /v1/hello` | plugin version, server, who is online, `epoch`, `last` (the position to start polling from) |
 | `GET /v1/events?epoch=E&after=ID&wait=S` | events after `ID` (waits up to `S` seconds, at most 30). `after=-1` only returns the current position. A different `epoch` means the plugin restarted: `reset` is true and everything since the start is returned. |
 | `POST /v1/chat` | `{prefix, name, color, text}` show a message in the game chat |
 | `POST /v1/tell` | `{player, text, color}` a private message |
