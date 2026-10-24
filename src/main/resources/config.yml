@@ -14,6 +14,9 @@ key: ""
 # Optional, needs PlaceholderAPI: shown before the player's name in Discord, for example "%luckperms_prefix%". Leave empty for none.
 rank-placeholder: ""
 tag-placeholder: ""
+# Optional, needs PlaceholderAPI: the player's team, for example "%betterteams_name%" (use the placeholder of your team plugin; test it in the game with /papi parse me <placeholder>).
+# Discord then shows "rank name team" and /mc role can give a Discord role to a team. Empty = the bot uses the tag above as the team.
+team-placeholder: ""
 
 # How many seconds the clocks of this server and the bot may differ. Both should use automatic time.
 clock-skew-seconds: 60

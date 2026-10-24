@@ -6,11 +6,18 @@ author: Nexora
 description: Connects this server to the Nexora Discord bot (chat, joins, deaths, account linking) without a bot token on the server.
 softdepend: [PlaceholderAPI]
 commands:
+  mc:
+    description: Link your Minecraft name to your Discord account.
+    usage: /mc link
+    permission: nexoraconnect.link
   nexoraconnect:
     description: Shows whether the Nexora bot is connected.
     permission: nexoraconnect.admin
     aliases: [nexora]
 permissions:
+  nexoraconnect.link:
+    description: Use /mc link to link your Discord account.
+    default: true
   nexoraconnect.admin:
     description: See the connection status.
     default: op

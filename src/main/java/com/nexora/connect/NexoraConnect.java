@@ -34,6 +34,7 @@ public final class NexoraConnect extends JavaPlugin implements Listener, Game {
     private static final Pattern LINK = Pattern.compile("^!link\\s+([A-Za-z0-9]{4,10})$", Pattern.CASE_INSENSITIVE);
     private Events events;
     private Api api;
+    private LinkRequests linkRequests;
 
     @Override
     public void onEnable() {
@@ -45,6 +46,7 @@ public final class NexoraConnect extends JavaPlugin implements Listener, Game {
             return;
         }
         events = new Events();
+        linkRequests = new LinkRequests(events);
         api = new Api(this, events, new Auth(key, Math.max(10, getConfig().getLong("clock-skew-seconds", 60))),
                 getConfig().getString("bind", "0.0.0.0"), getConfig().getInt("port", 25590), getDescription().getVersion(), getLogger());
         try {
@@ -86,6 +88,8 @@ public final class NexoraConnect extends JavaPlugin implements Listener, Game {
         e.addProperty("player", p.getName());
         e.addProperty("prefix", placeholder(p, getConfig().getString("rank-placeholder", "")));
         e.addProperty("suffix", placeholder(p, getConfig().getString("tag-placeholder", "")));
+        String teamTemplate = getConfig().getString("team-placeholder", "");
+        if (teamTemplate != null && !teamTemplate.isBlank()) e.addProperty("team", placeholder(p, teamTemplate));      // sent only when set: an empty text then means "no team"
         return e;
     }
 
@@ -200,6 +204,18 @@ public final class NexoraConnect extends JavaPlugin implements Listener, Game {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (command.getName().equalsIgnoreCase("mc")) {              // /mc link: ask the bot for a code to enter in Discord
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Only players can link their account.");
+            } else if (api == null || linkRequests == null) {
+                sender.sendMessage("The Nexora connection is not running. Ask an admin.");
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("link")) {
+                sender.sendMessage(linkRequests.request(((Player) sender).getName(), System.currentTimeMillis()));
+            } else {
+                sender.sendMessage("Usage: /mc link");
+            }
+            return true;
+        }
         long ago = api == null ? -1 : api.lastSeen == 0 ? -1 : (System.currentTimeMillis() - api.lastSeen) / 1000;
         sender.sendMessage(api == null ? "NexoraConnect is not running. Check the key in config.yml and the console."
                 : "NexoraConnect listens on port " + api.port() + ". " + (ago < 0 ? "The bot has not connected yet." : "The bot was last seen " + ago + " seconds ago."));
